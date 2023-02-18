@@ -6,4 +6,4 @@ app.get('/', (req, res) => {
 });
 
 const PORT = process.env.PORT || 80;
-app.listen(PORT);
+app.listen(80);
