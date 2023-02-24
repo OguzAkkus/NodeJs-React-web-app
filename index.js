@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
 const keys = require('./config/keys');
+const { PORT } = require('./config/keys');
 require('./models/User');
 require('./services/passport');
 
@@ -16,7 +17,7 @@ const app = express();
 const sslServer = https.createServer(
   {
   key: fs.readFileSync(path.join(__dirname, './config/cert', keys.certKeyName)),
-  cert: fs.readFileSync(path.join(__dirname, './config/cert', keys.certName))
+  cert: fs.readFileSync(path.join(__dirname, './config/cert', keys))
   },
   app
 );
@@ -33,4 +34,4 @@ app.use(passport.session());
 require('./routes/authRoutes')(app);
 
 //const PORT = process.env.PORT || 5000;
-app.listen(keys.PORT);
+sslServer.listen(PORT);
