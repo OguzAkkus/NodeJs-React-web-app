@@ -17,7 +17,7 @@ const app = express();
 const sslServer = https.createServer(
   {
   key: fs.readFileSync(path.join(__dirname, './config/cert', keys.certKeyName)),
-  cert: fs.readFileSync(path.join(__dirname, './config/cert', keys))
+  cert: fs.readFileSync(path.join(__dirname, './config/cert', keys.certName))
   },
   app
 );
@@ -28,6 +28,7 @@ app.use(
     keys: [keys.cookieKey]
   })
 );
+
 app.use(passport.initialize());
 app.use(passport.session());
 
