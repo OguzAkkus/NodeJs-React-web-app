@@ -1,4 +1,7 @@
 const express = require('express');
+const https = require('https');
+const path = require('path');
+const fs = require('fs');
 const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
@@ -9,6 +12,14 @@ require('./services/passport');
 mongoose.connect(keys.mongoURI);
 
 const app = express();
+
+const sslServer = https.createServer(
+  {
+  key: fs.readFileSync(path.join(__dirname, './config/cert', keys.certKeyName)),
+  cert: fs.readFileSync(path.join(__dirname, './config/cert', keys.certName))
+  },
+  app
+);
 
 app.use(
   cookieSession({
