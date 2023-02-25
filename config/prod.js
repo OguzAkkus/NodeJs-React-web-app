@@ -9,11 +9,11 @@ const client = new SecretClient(url, credential);
 
 
 module.exports = {
-    googleClientID: await client.getSecret(GOOGLE_CLIENT_ID),
-    googleClientSecret: await client.getSecret(GOOGLE_CLIENT_SECRET),
-    mongoURI: await client.getSecret(MONGO_URI),
-    cookieKey: await client.getSecret(COOKIE_KEY),
-    certKeyName: await client.getSecret(CERTIFICATE_KEY),
-    certName: await client.getSecret(CERTIFICATE),
+    googleClientID: await client.getSecret('GOOGLE-CLIENT-ID'),
+    googleClientSecret: await client.getSecret('GOOGLE-CLIENT-SECRET'),
+    mongoURI: await client.getSecret('MONGO-URI'),
+    cookieKey: await client.getSecret('COOKIE-KEY'),
+    certKeyName: await client.getSecret('CERTIFICATE-KEY'),
+    certName: await client.getSecret('CERTIFICATE'),
     PORT: '443'
 };
