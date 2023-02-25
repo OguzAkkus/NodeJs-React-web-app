@@ -8,7 +8,7 @@
     "npm": "8.5.2"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "NODE_ENV='production' node index.js",
     "dev": "nodemon index.js"
   },
   "repository": {

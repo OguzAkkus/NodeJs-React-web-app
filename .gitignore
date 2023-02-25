@@ -1,5 +1,5 @@
 node_modules
 playground
 package-lock.json
-config/keys.js
 config/cert
+config/dev.js
