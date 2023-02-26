@@ -5,32 +5,35 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
-const keys = require('./config/keys');
+const { getSecrets } = require('./config/keys');
+const app = express();
 require('./models/User');
 require('./services/passport');
 
-mongoose.connect(keys.mongoURI);
+(async () => {
+  const secrets = await getSecrets();
+  mongoose.connect(secrets.mongoURI);
+  
+  const sslServer = https.createServer(
+    {
+    key: fs.readFileSync(path.join(__dirname, './config/cert', secrets.certKeyName)),
+    cert: fs.readFileSync(path.join(__dirname, './config/cert', secrets.certName))
+    },
+    app
+  );
 
-const app = express();
+  app.use(
+    cookieSession({
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+      keys: [secrets.cookieKey]
+    })
+  );
+  
+  app.use(passport.initialize());
+  app.use(passport.session());
 
-const sslServer = https.createServer(
-  {
-  key: fs.readFileSync(path.join(__dirname, './config/cert', keys.certKeyName)),
-  cert: fs.readFileSync(path.join(__dirname, './config/cert', keys.certName))
-  },
-  app
-);
+  require('./routes/authRoutes')(app);
 
-app.use(
-  cookieSession({
-    maxAge: 30 * 24 * 60 * 60 * 1000,
-    keys: [keys.cookieKey]
-  })
-);
+  sslServer.listen(secrets.PORT);
 
-app.use(passport.initialize());
-app.use(passport.session());
-
-require('./routes/authRoutes')(app);
-
-sslServer.listen(keys.PORT);
+})();
