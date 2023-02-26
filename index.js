@@ -13,6 +13,7 @@ require('./services/passport');
 (async () => {
   const secrets = await getSecrets();
   mongoose.connect(secrets.mongoURI);
+  mongoose.set('strictQuery', false);
   
   const sslServer = https.createServer(
     {
