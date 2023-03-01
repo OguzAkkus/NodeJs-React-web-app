@@ -7,7 +7,6 @@ const cookieSession = require('cookie-session');
 const passport = require('passport');
 const bodyParser = require('body-parser');
 const keys = require('./config/keys');
-const { PORT } = require('./config/prod');
 const app = express();
 
 require('./models/User');
@@ -42,12 +41,10 @@ if (process.env.NODE_ENV === 'Production') {
   });
 }
 
-// sslServer.listen(secrets.HTTPS_PORT);
-// app.listen(keys.PORT);
+const server = http.Server.createServer({
+  key: fs.readFileSync(path.join(__dirname, './config/cert', keys.certKeyName)),
+  cert: fs.readFileSync(path.join(__dirname, './config/cert', keys.certName))
+  },app
+);
 
-// const server = http.Server.createServer({
-//   key: fs.readFileSync(path.join(__dirname, './config/cert', keys.certKeyName)),
-//   cert: fs.readFileSync(path.join(__dirname, './config/cert', keys.certName))
-//   },app
-// );
-app.listen(PORT);
+server.listen(keys.PORT);
