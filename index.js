@@ -7,13 +7,12 @@ const cookieSession = require('cookie-session');
 const passport = require('passport');
 const bodyParser = require('body-parser');
 const keys = require('./config/keys');
-const { PORT } = require('./config/prod');
 const app = express();
+
 require('./models/User');
 require('./services/passport');
 mongoose.set('strictQuery', false);
 mongoose.connect(keys.mongoURI);
-
 app.use(bodyParser.json());
 app.use(
   cookieSession({
@@ -50,5 +49,5 @@ if (process.env.NODE_ENV === 'Production') {
 //   cert: fs.readFileSync(path.join(__dirname, './config/cert', keys.certName))
 //   },app
 // );
-
+console.log( keys.PORT );
 app.listen(80);
