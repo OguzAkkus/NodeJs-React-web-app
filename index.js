@@ -1,40 +1,54 @@
 const express = require('express');
-const https = require('https');
+const http = require('https');
 const path = require('path');
 const fs = require('fs');
 const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
-const { getSecrets } = require('./config/keys');
+const bodyParser = require('body-parser');
+const keys = require('./config/keys');
+const { PORT } = require('./config/prod');
 const app = express();
 require('./models/User');
 require('./services/passport');
+mongoose.set('strictQuery', false);
+mongoose.connect(keys.mongoURI);
 
-(async () => {
-  const secrets = await getSecrets();
-  mongoose.connect(secrets.mongoURI);
-  mongoose.set('strictQuery', false);
-  
-  const sslServer = https.createServer(
-    {
-    key: fs.readFileSync(path.join(__dirname, './config/cert', secrets.certKeyName)),
-    cert: fs.readFileSync(path.join(__dirname, './config/cert', secrets.certName))
-    },
-    app
-  );
+app.use(bodyParser.json());
+app.use(
+  cookieSession({
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+    keys: [keys.cookieKey]
+  })
+);
 
-  app.use(
-    cookieSession({
-      maxAge: 30 * 24 * 60 * 60 * 1000,
-      keys: [secrets.cookieKey]
-    })
-  );
-  
-  app.use(passport.initialize());
-  app.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 
-  require('./routes/authRoutes')(app);
+require('./routes/authRoutes')(app);
+require('./routes/billingRoutes')(app);
 
-  sslServer.listen(secrets.PORT);
+if (process.env.NODE_ENV === 'Production') {
+  // Express will serve up production assers
+  // like our main.js file, or main.css file!
+  app.use(express.static('client/build'));
 
-})();
+
+  // Express will serve up the index.html file
+  // if it doesn't recognize the route
+  const path = require('path');
+  app.get('*', (req,res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
+
+// sslServer.listen(secrets.HTTPS_PORT);
+// app.listen(keys.PORT);
+
+// const server = http.Server.createServer({
+//   key: fs.readFileSync(path.join(__dirname, './config/cert', keys.certKeyName)),
+//   cert: fs.readFileSync(path.join(__dirname, './config/cert', keys.certName))
+//   },app
+// );
+
+app.listen(80);
