@@ -7,6 +7,7 @@ const cookieSession = require('cookie-session');
 const passport = require('passport');
 const bodyParser = require('body-parser');
 const keys = require('./config/keys');
+const { PORT } = require('./config/prod');
 const app = express();
 
 require('./models/User');
@@ -49,5 +50,4 @@ if (process.env.NODE_ENV === 'Production') {
 //   cert: fs.readFileSync(path.join(__dirname, './config/cert', keys.certName))
 //   },app
 // );
-console.log( keys.PORT );
-app.listen(80);
+app.listen(PORT);
