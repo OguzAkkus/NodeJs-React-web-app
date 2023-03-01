@@ -1,5 +1,5 @@
 const express = require('express');
-const http = require('http');
+const https = require('https');
 const path = require('path');
 const fs = require('fs');
 const mongoose = require('mongoose');
@@ -41,7 +41,7 @@ if (process.env.NODE_ENV === 'Production') {
   });
 }
 
-const server = http.Server.createServer({
+const server = https.Server({
   key: fs.readFileSync(path.join(__dirname, './config/cert', keys.certKeyName)),
   cert: fs.readFileSync(path.join(__dirname, './config/cert', keys.certName))
   },app
