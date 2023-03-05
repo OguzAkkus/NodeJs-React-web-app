@@ -1,18 +1,21 @@
 const express = require('express');
-const https = require('https');
-const path = require('path');
-const fs = require('fs');
 const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
 const bodyParser = require('body-parser');
 const keys = require('./config/keys');
-const app = express();
-
+const https = require('https');
+const path = require('path');
+const fs = require('fs');
 require('./models/User');
+require('./models/Survey');
 require('./services/passport');
+
 mongoose.set('strictQuery', false);
 mongoose.connect(keys.mongoURI);
+
+const app = express();
+
 app.use(bodyParser.json());
 app.use(
   cookieSession({
@@ -20,12 +23,12 @@ app.use(
     keys: [keys.cookieKey]
   })
 );
-
 app.use(passport.initialize());
 app.use(passport.session());
 
 require('./routes/authRoutes')(app);
 require('./routes/billingRoutes')(app);
+require('./routes/surveyRoutes')(app);
 
 if (process.env.NODE_ENV === 'Production') {
   // Express will serve up production assers
@@ -41,10 +44,13 @@ if (process.env.NODE_ENV === 'Production') {
   });
 }
 
-const server = https.Server({
-  key: fs.readFileSync(path.join(__dirname, './config/cert', keys.certKeyName)),
-  cert: fs.readFileSync(path.join(__dirname, './config/cert', keys.certName))
-  },app
-);
-
-server.listen(keys.PORT);
+if (process.env.NODE_ENV === 'Production') {
+  const server = https.Server({
+    key: fs.readFileSync(path.join(__dirname, './config/cert', keys.certKeyName)),
+    cert: fs.readFileSync(path.join(__dirname, './config/cert', keys.certName))
+    },app
+  );
+  server.listen(keys.PORT);
+} else {
+  app.listen(keys.PORT);
+}

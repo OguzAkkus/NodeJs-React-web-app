@@ -4,3 +4,4 @@ package-lock.json
 config/cert
 config/dev.js
 .env
+env-prod

@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/OguzAkkus/NodeJsTest#readme",
   "dependencies": {
+    "@sendgrid/mail": "^7.7.0",
     "body-parser": "^1.20.2",
     "concurrently": "^7.6.0",
     "cookie-session": "^2.0.0",
@@ -33,6 +34,7 @@
     "nodemon": "^2.0.20",
     "passport": "^0.5.0",
     "passport-google-oauth20": "^2.0.0",
+    "sendgrid": "^5.2.3",
     "stripe": "^11.12.0",
     "webpack-dev-server": "4.11"
   }
