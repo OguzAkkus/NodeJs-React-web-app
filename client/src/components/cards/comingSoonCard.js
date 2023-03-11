@@ -2,9 +2,9 @@ import React from 'react';
 import { ReactComponent as IconFacebook } from './assets/icons/facebook.svg';
 import { ReactComponent as IconTwitter } from './assets/icons/twitter.svg';
 import { ReactComponent as IconGithub } from './assets/icons/github.svg';
+import logo from "./assets/icons/Logo.png"
 import "./styles/fonts.css";
 import "./comingSoonCard.css";
-import logo from "./assets/icons/Logo.png"
 
 class comingSoon extends React.Component {
   render = () => {
@@ -36,7 +36,7 @@ class comingSoon extends React.Component {
           </a>
         </div>
         <div className="footer">
-          <span>made by <a className="underlined" href="https://github.com/OguzAkkus" target="_blank" rel="noopener noreferrer">OguzcanAkkus</a> using <a className="underlined" href="https://reactjs.org/" title="ReactJS" target="_blank" rel="noopener noreferrer">React</a> | <a className="underlined" href="https://github.com" title="GitHub repo" target="_blank" rel="noopener noreferrer">GitHub</a></span>
+          <span>made by <a className="underlined" href="https://github.com/OguzAkkus" target="_blank" rel="noopener noreferrer">OguzcanAkkus</a> using <a className="underlined" href="https://reactjs.org/" title="ReactJS" target="_blank" rel="noopener noreferrer">React</a> | <a className="underlined" href="https://github.com/OguzAkkus/NodeJs-React-web-app" title="GitHub repo" target="_blank" rel="noopener noreferrer">GitHub</a></span>
         </div>
       </div>
     );
