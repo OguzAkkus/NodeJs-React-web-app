@@ -21,7 +21,7 @@ class comingSoon extends React.Component {
             <a href="https://twitter.com" title="Twitter" target="_blank" rel="noopener noreferrer">
               <IconTwitter className="icon" />
             </a>
-            <a href="https://github.com" title="GitHub" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/OguzAkkus" title="GitHub" target="_blank" rel="noopener noreferrer">
               <IconGithub className="icon" />
             </a>
           </div>
