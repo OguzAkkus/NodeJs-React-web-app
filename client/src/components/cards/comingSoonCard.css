@@ -1,4 +1,4 @@
-.card {
+.CScard {
   width: 90%;
   height: 80%;
   min-height: 512px;
@@ -11,7 +11,7 @@
 }
 
 @media screen and (max-width: 512px) {
-  .card {
+  .CScard {
     width: 100%;
     height: 100%;
     border-radius: 10px;

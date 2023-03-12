@@ -1,15 +1,14 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { ReactComponent as IconFacebook } from './assets/icons/facebook.svg';
 import { ReactComponent as IconTwitter } from './assets/icons/twitter.svg';
 import { ReactComponent as IconGithub } from './assets/icons/github.svg';
 import logo from "./assets/icons/Logo.png"
 import "./styles/fonts.css";
 import "./comingSoonCard.css";
-
-class comingSoon extends React.Component {
+class comingSoonCard extends Component {
   render = () => {
     return (
-      <div className="card">
+      <div className="CScard">
         <div className="header">
           <div className="logo">
             <img src={logo} alt="Logo"/>
@@ -43,4 +42,4 @@ class comingSoon extends React.Component {
   }
 }
 
-export default comingSoon;
+export default comingSoonCard;
